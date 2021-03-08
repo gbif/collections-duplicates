@@ -18,13 +18,13 @@ pipeline {
                          'For multiple values separate them with commas, e.g.: assig1,assig2,assig3')
 
     separator(name: "release_separator", sectionHeader: "Duplicates Request")
-    choice(name: 'ENTITY_TYPE', choices: ['INSTITUTIONS', 'COLLECTIONS'], description: 'If you want to find duplicates for institutions, collections or both')
-    choice(name: 'SAME_NAME', choices: ['true', 'false'])
-    choice(name: 'SAME_FUZZY_NAME', choices: ['true', 'false'])
-    choice(name: 'SAME_CODE', choices: ['true', 'false'])
-    choice(name: 'SAME_COUNTRY', choices: ['true', 'false'])
-    choice(name: 'SAME_CITY', choices: ['true', 'false'])
-    choice(name: 'SAME_INSTITUTION', choices: ['true', 'false'], description: 'Only for collections')
+    choice(name: 'ENTITY_TYPE', choices: ['ALL', 'INSTITUTIONS', 'COLLECTIONS'], description: 'If you want to find duplicates for institutions, collections or both')
+    choice(name: 'SAME_NAME', choices: ['-', 'true', 'false'])
+    choice(name: 'SAME_FUZZY_NAME', choices: ['-', 'true', 'false'])
+    choice(name: 'SAME_CODE', choices: ['-', 'true', 'false'])
+    choice(name: 'SAME_COUNTRY', choices: ['-', 'true', 'false'])
+    choice(name: 'SAME_CITY', choices: ['-', 'true', 'false'])
+    choice(name: 'SAME_INSTITUTION', choices: ['-', 'true', 'false'], description: 'Only for collections')
     string(name: 'IN_COUNTRIES',
                 defaultValue: '',
                 description: 'For multiple values separate them with commas, e.g.: US,DK,DE')
@@ -72,17 +72,54 @@ pipeline {
 }
 
 def createCliArgs() {
-  echo "${params.ENTITY_TYPE}"
-  echo "${params.SAME_NAME}"
-
   def args = "--entityType ${params.ENTITY_TYPE}"
 
   if (params.GITHUB_ASSIGNEES != '') {
     args += " -ga ${params.GITHUB_ASSIGNEES}"
   }
 
-  if (params.SAME_NAME != null) {
-    args += " -ga ${params.SAME_NAME}"
+  if (params.SAME_NAME != '-') {
+    args += " --sameName ${params.SAME_NAME}"
+  }
+
+  if (params.SAME_FUZZY_NAME != '-') {
+    args += " --sameFuzzyName ${params.SAME_FUZZY_NAME}"
+  }
+
+  if (params.SAME_CODE != '-') {
+    args += " --sameCode ${params.SAME_CODE}"
+  }
+
+  if (params.SAME_COUNTRY != '-') {
+    args += " --sameCountry ${params.SAME_COUNTRY}"
+  }
+
+  if (params.SAME_CITY != '-') {
+    args += " --sameCity ${params.SAME_CITY}"
+  }
+
+  if (params.SAME_INSTITUTION != '-') {
+    args += " --sameInstitution ${params.SAME_INSTITUTION}"
+  }
+
+  if (params.IN_COUNTRIES != '') {
+    args += " --inCountries ${params.IN_COUNTRIES}"
+  }
+
+  if (params.NOT_IN_COUNTRIES != '') {
+    args += " --notInCountries ${params.NOT_IN_COUNTRIES}"
+  }
+
+  if (params.EXCLUDE_KEYS != '') {
+    args += " --excludeKeys ${params.EXCLUDE_KEYS}"
+  }
+
+  if (params.IN_INSTITUTIONS != '') {
+    args += " --inInstitutions ${params.IN_INSTITUTIONS}"
+  }
+
+  if (params.NOT_IN_INSTITUTIONS != '') {
+    args += " --notInInstitutions ${params.NOT_IN_INSTITUTIONS}"
   }
 
   return args

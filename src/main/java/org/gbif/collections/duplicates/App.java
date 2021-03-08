@@ -19,12 +19,14 @@ public class App {
 
     DuplicatesInspector duplicatesInspector = new DuplicatesInspector(config);
 
-    if (cliArgs.getEntityType().contains(CliArgs.EntityType.INSTITUTIONS)) {
+    if (cliArgs.getEntityType().contains(CliArgs.EntityType.ALL)
+        || cliArgs.getEntityType().contains(CliArgs.EntityType.INSTITUTIONS)) {
       log.info("Inspecting institution duplicates");
       duplicatesInspector.inspectInstitutionDuplicates(request);
     }
 
-    if (cliArgs.getEntityType().contains(CliArgs.EntityType.COLLECTIONS)) {
+    if (cliArgs.getEntityType().contains(CliArgs.EntityType.ALL)
+        || cliArgs.getEntityType().contains(CliArgs.EntityType.COLLECTIONS)) {
       log.info("Inspecting collection duplicates");
       duplicatesInspector.inspectCollectionDuplicates(request);
     }

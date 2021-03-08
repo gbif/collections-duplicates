@@ -57,6 +57,7 @@ public class CliArgs {
   private Set<EntityType> entityType;
 
   public enum EntityType {
+    ALL,
     INSTITUTIONS,
     COLLECTIONS;
   }

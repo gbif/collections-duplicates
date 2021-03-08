@@ -17,6 +17,11 @@ public class App {
     DuplicatesRequest request = requestFromArgs(cliArgs);
     log.debug("Request created: {}", request);
 
+    if (request.isEmpty()) {
+      throw new IllegalArgumentException(
+          "Empty request - at least one matching parameter has to be specified (sameName, sameCode, etc.) ");
+    }
+
     DuplicatesInspector duplicatesInspector = new DuplicatesInspector(config);
 
     if (cliArgs.getEntityType().contains(CliArgs.EntityType.ALL)

@@ -17,7 +17,7 @@ pipeline {
             description: '(Optional) If set it overrides the default assignees for Github issues.' +
                          'For multiple values separate them with commas, e.g.: assig1,assig2,assig3')
 
-    separator(name: "release_separator", sectionHeader: "Duplicates Request")
+    separator(name: "release_separator", sectionHeader: "Duplicates Request (at least one SAME_[field] param is required)", )
     choice(name: 'ENTITY_TYPE', choices: ['ALL', 'INSTITUTIONS', 'COLLECTIONS'], description: 'If you want to find duplicates for institutions, collections or both')
     choice(name: 'SAME_NAME', choices: ['-', 'true', 'false'])
     choice(name: 'SAME_FUZZY_NAME', choices: ['-', 'true', 'false'])

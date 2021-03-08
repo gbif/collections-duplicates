@@ -20,22 +20,22 @@ public class CliArgs {
   @Parameter(names = {"--githubAssignees", "-ga"})
   private Set<String> githubAssignees;
 
-  @Parameter(names = {"--sameName", "-sn"})
+  @Parameter(names = {"--sameName", "-sn"}, arity = 1)
   private Boolean sameName;
 
-  @Parameter(names = {"--sameFuzzyName", "-sfn"})
+  @Parameter(names = {"--sameFuzzyName", "-sfn"}, arity = 1)
   private Boolean sameFuzzyName;
 
-  @Parameter(names = {"--sameCode", "-sc"})
+  @Parameter(names = {"--sameCode", "-sc"}, arity = 1)
   private Boolean sameCode;
 
-  @Parameter(names = {"--sameCountry", "-sco"})
+  @Parameter(names = {"--sameCountry", "-sco"}, arity = 1)
   private Boolean sameCountry;
 
-  @Parameter(names = {"--sameCity", "-sci"})
+  @Parameter(names = {"--sameCity", "-sci"}, arity = 1)
   private Boolean sameCity;
 
-  @Parameter(names = {"--sameInstitution", "-si"})
+  @Parameter(names = {"--sameInstitution", "-si"}, arity = 1)
   private Boolean sameInstitution;
 
   @Parameter(names = {"--inCountries", "-ic"})

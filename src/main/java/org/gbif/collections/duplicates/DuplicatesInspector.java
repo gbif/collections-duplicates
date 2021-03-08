@@ -13,6 +13,9 @@ import org.gbif.ws.client.ClientBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DuplicatesInspector {
 
   private final InstitutionClient institutionClient;
@@ -33,6 +36,7 @@ public class DuplicatesInspector {
   public void inspectInstitutionDuplicates(DuplicatesRequest request) {
     DuplicatesResult result = institutionClient.findPossibleDuplicates(request);
 
+    log.info("Processing institution duplicates");
     List<CreatedIssueResponse> createdIssues = new ArrayList<>();
     result
         .getDuplicates()
@@ -47,6 +51,7 @@ public class DuplicatesInspector {
             });
 
     // create master issue
+    log.info("Creating master issue for institution duplicates");
     Issue masterIssue = issueFactory.createMasterIssue(createdIssues, request);
     githubClient.createIssue(masterIssue);
   }
@@ -54,6 +59,7 @@ public class DuplicatesInspector {
   public void inspectCollectionDuplicates(DuplicatesRequest request) {
     DuplicatesResult result = collectionClient.findPossibleDuplicates(request);
 
+    log.info("Processing collection duplicates");
     List<CreatedIssueResponse> createdIssues = new ArrayList<>();
     result
         .getDuplicates()
@@ -67,6 +73,7 @@ public class DuplicatesInspector {
             });
 
     // create master issue
+    log.info("Creating master issue for collection duplicates");
     Issue masterIssue = issueFactory.createMasterIssue(createdIssues, request);
     githubClient.createIssue(masterIssue);
   }

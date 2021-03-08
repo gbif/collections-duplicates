@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.google.common.base.Strings;
 import lombok.SneakyThrows;
 
 public class IssueFactory {
@@ -88,9 +89,13 @@ public class IssueFactory {
 
           // keep track of the values used to find the duplicates
           names.compute(duplicate.getName(), (k, v) -> v == null ? 1 : v + 1);
-          cities.compute(duplicate.getPhysicalCity(), (k, v) -> v == null ? 1 : v + 1);
-          cities.compute(duplicate.getMailingCity(), (k, v) -> v == null ? 1 : v + 1);
 
+          if (!Strings.isNullOrEmpty(duplicate.getPhysicalCity())) {
+            cities.compute(duplicate.getPhysicalCity(), (k, v) -> v == null ? 1 : v + 1);
+          }
+          if (!Strings.isNullOrEmpty(duplicate.getMailingCity())) {
+            cities.compute(duplicate.getMailingCity(), (k, v) -> v == null ? 1 : v + 1);
+          }
           if (duplicate.getPhysicalCountry() != null) {
             countries.compute(
                 duplicate.getPhysicalCountry().getIso2LetterCode(),

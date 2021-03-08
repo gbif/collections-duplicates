@@ -10,7 +10,6 @@
     <version>37</version>
   </parent>
 
-  <groupId>org.gbif</groupId>
   <artifactId>collections-duplicates</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -34,6 +33,17 @@
       <url>http://repository.gbif.org/content/repositories/thirdparty/</url>
     </repository>
   </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>gbif-release</id>
+      <url>http://repository.gbif.org/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>gbif-deploy</id>
+      <url>http://repository.gbif.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <properties>
     <jdkLevel>1.8</jdkLevel>

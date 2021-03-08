@@ -77,6 +77,10 @@ public class GithubClient {
     return syncCall(api.createIssue(issue));
   }
 
+  public void updateIssue(Issue issue) {
+    syncCall(api.updateIssue(issue.getNumber(), issue));
+  }
+
   public Optional<Issue> findIssueWithSameTitleAndLabels(String title, List<String> labels) {
     int page = 1;
     int perPage = 100;
@@ -112,6 +116,24 @@ public class GithubClient {
     return Optional.empty();
   }
 
+  public List<CreatedIssueResponse> listIssues(String state) {
+    int page = 1;
+    int perPage = 100;
+    List<String> labels = Collections.emptyList();
+
+    // first call
+    List<CreatedIssueResponse> issues = syncCall(api.listIssues(labels, state, page, perPage));
+
+    // paginate over issues till we find a match
+    List<CreatedIssueResponse> result = new ArrayList<>();
+    while (!issues.isEmpty()) {
+      result.addAll(issues);
+      issues = syncCall(api.listIssues(labels, state, page++, perPage));
+    }
+
+    return result;
+  }
+
   public Optional<CreatedIssueResponse> createIssueIfNotExists(Issue issue, String label) {
     Optional<Issue> existingIssueOpt =
         findIssueWithSameTitleAndLabels(issue.getTitle(), Collections.singletonList(label));
@@ -131,6 +153,9 @@ public class GithubClient {
         @Query("state") String state,
         @Query("page") int page,
         @Query("per_page") int perPage);
+
+    @PATCH("issues/{id}")
+    Call<Void> updateIssue(@Path("id") long id, @Body Issue issue);
   }
 
   private static <T> T syncCall(Call<T> call) {

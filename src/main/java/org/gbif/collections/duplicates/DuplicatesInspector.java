@@ -68,7 +68,7 @@ public class DuplicatesInspector {
               // create issue
               Issue issue = issueFactory.createIssue(d, IssueFactory.IssueType.COLLECTION, request);
               githubClient
-                  .createIssueIfNotExists(issue, IssueFactory.INSTITUTION_LABEL)
+                  .createIssueIfNotExists(issue, IssueFactory.COLLECTION_LABEL)
                   .ifPresent(createdIssues::add);
             });
 

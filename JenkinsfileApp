@@ -1,0 +1,89 @@
+pipeline {
+  agent any
+  tools {
+    maven 'Maven3.2'
+    jdk 'JDK8'
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '20'))
+    timestamps()
+  }
+  parameters {
+    choice(name: 'ENV', choices: ['dev', 'uat', 'prod'], description: 'Choose environment')
+    choice(name: 'VERSION', choices: ['releases', 'snapshots'],
+            description: 'Snapshot versions should be used only for development purposes.')
+    string(name: 'GITHUB_ASSIGNEES',
+            defaultValue: '',
+            description: '(Optional) If set it overrides the default assignees for Github issues.' +
+                         'For multiple values separate them with commas, e.g.: assig1,assig2,assig3')
+
+    separator(name: "release_separator", sectionHeader: "Duplicates Request")
+    choice(name: 'ENTITY_TYPE', choices: ['INSTITUTIONS', 'COLLECTIONS'], description: 'If you want to find duplicates for institutions, collections or both')
+    choice(name: 'SAME_NAME', choices: ['true', 'false'])
+    choice(name: 'SAME_FUZZY_NAME', choices: ['true', 'false'])
+    choice(name: 'SAME_CODE', choices: ['true', 'false'])
+    choice(name: 'SAME_COUNTRY', choices: ['true', 'false'])
+    choice(name: 'SAME_CITY', choices: ['true', 'false'])
+    choice(name: 'SAME_INSTITUTION', choices: ['true', 'false'], description: 'Only for collections')
+    string(name: 'IN_COUNTRIES',
+                defaultValue: '',
+                description: 'For multiple values separate them with commas, e.g.: US,DK,DE')
+    string(name: 'NOT_IN_COUNTRIES',
+                    defaultValue: '',
+                    description: 'For multiple values separate them with commas, e.g.: US,DK,DE')
+    string(name: 'EXCLUDE_KEYS',
+                    defaultValue: '',
+                    description: 'For multiple values separate them with commas, e.g.: '15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
+    string(name: 'IN_INSTITUTIONS',
+                        defaultValue: '',
+                        description: 'For multiple values separate them with commas, e.g.: '15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
+    string(name: 'NOT_IN_INSTITUTIONS',
+                           defaultValue: '',
+                           description: 'For multiple values separate them with commas, e.g.: '15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
+  }
+  stages {
+    stage('Run') {
+      environment {
+        REPO_URL = "https://repository.gbif.org/service/rest/v1/search/assets/download?repository=${params.VERSION}" +
+                   "&group=org.gbif&name=collections-duplicates&sort=version&direction=desc&maven.classifier&maven.extension=jar"
+        CLI_ARGS = createCliArgs()
+      }
+      steps {
+        sshagent(['85f1747d-ea03-49ca-9e5d-aa9b7bc01c5f']) {
+          sh """
+           rm -rf *
+           git clone -b master git@github.com:gbif/gbif-configuration.git
+    
+           curl "${REPO_URL}" -L -o collections-duplicates.jar
+           java -jar collections-duplicates.jar \
+                -c gbif-configuration/grscicoll/duplicates/${params.ENV.toLowerCase()}/config.yaml \
+                ${CLI_ARGS}
+          """
+        }
+      }
+    }
+  }
+  post {
+    failure {
+      slackSend message: "Collections duplicates run failed for env ${ENV} - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)",
+              channel: "#collections-duplicates"
+    }
+  }
+}
+
+def createCliArgs() {
+  echo "${params.ENTITY_TYPE}"
+  echo "${params.SAME_NAME}"
+
+  def args = "--entityType ${params.ENTITY_TYPE}"
+
+  if (params.GITHUB_ASSIGNEES != '') {
+    args += " -ga ${params.GITHUB_ASSIGNEES}"
+  }
+
+  if (params.SAME_NAME != null) {
+    args += " -ga ${params.SAME_NAME}"
+  }
+
+  return args
+}

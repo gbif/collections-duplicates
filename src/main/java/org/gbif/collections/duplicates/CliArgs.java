@@ -20,22 +20,34 @@ public class CliArgs {
   @Parameter(names = {"--githubAssignees", "-ga"})
   private Set<String> githubAssignees;
 
-  @Parameter(names = {"--sameName", "-sn"}, arity = 1)
+  @Parameter(
+      names = {"--sameName", "-sn"},
+      arity = 1)
   private Boolean sameName;
 
-  @Parameter(names = {"--sameFuzzyName", "-sfn"}, arity = 1)
+  @Parameter(
+      names = {"--sameFuzzyName", "-sfn"},
+      arity = 1)
   private Boolean sameFuzzyName;
 
-  @Parameter(names = {"--sameCode", "-sc"}, arity = 1)
+  @Parameter(
+      names = {"--sameCode", "-sc"},
+      arity = 1)
   private Boolean sameCode;
 
-  @Parameter(names = {"--sameCountry", "-sco"}, arity = 1)
+  @Parameter(
+      names = {"--sameCountry", "-sco"},
+      arity = 1)
   private Boolean sameCountry;
 
-  @Parameter(names = {"--sameCity", "-sci"}, arity = 1)
+  @Parameter(
+      names = {"--sameCity", "-sci"},
+      arity = 1)
   private Boolean sameCity;
 
-  @Parameter(names = {"--sameInstitution", "-si"}, arity = 1)
+  @Parameter(
+      names = {"--sameInstitution", "-si"},
+      arity = 1)
   private Boolean sameInstitution;
 
   @Parameter(names = {"--inCountries", "-ic"})
@@ -54,7 +66,7 @@ public class CliArgs {
   private List<UUID> notInInstitutions;
 
   @Parameter(names = {"--entityType", "-et"})
-  private Set<EntityType> entityType;
+  private EntityType entityType;
 
   public enum EntityType {
     ALL,

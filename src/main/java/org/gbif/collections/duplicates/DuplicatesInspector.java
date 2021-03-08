@@ -52,7 +52,8 @@ public class DuplicatesInspector {
 
     // create master issue
     log.info("Creating master issue for institution duplicates");
-    Issue masterIssue = issueFactory.createMasterIssue(createdIssues, request);
+    Issue masterIssue =
+        issueFactory.createMasterIssue(createdIssues, request, IssueFactory.IssueType.INSTITUTION);
     githubClient.createIssue(masterIssue);
   }
 
@@ -74,7 +75,8 @@ public class DuplicatesInspector {
 
     // create master issue
     log.info("Creating master issue for collection duplicates");
-    Issue masterIssue = issueFactory.createMasterIssue(createdIssues, request);
+    Issue masterIssue =
+        issueFactory.createMasterIssue(createdIssues, request, IssueFactory.IssueType.COLLECTION);
     githubClient.createIssue(masterIssue);
   }
 }

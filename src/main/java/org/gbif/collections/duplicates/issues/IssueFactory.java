@@ -142,7 +142,8 @@ public class IssueFactory {
         .build();
   }
 
-  public Issue createMasterIssue(List<CreatedIssueResponse> issues, DuplicatesRequest request) {
+  public Issue createMasterIssue(
+      List<CreatedIssueResponse> issues, DuplicatesRequest request, IssueType issueType) {
     StringBuilder body = new StringBuilder();
 
     body.append("List of duplicates issues created for execution on ")
@@ -166,6 +167,7 @@ public class IssueFactory {
 
     Set<String> labels = new HashSet<>();
     labels.add(MASTER_ISSUE_LABEL);
+    labels.add(issueType.label);
     labels.add(LocalDateTime.now().toString());
 
     return Issue.builder()

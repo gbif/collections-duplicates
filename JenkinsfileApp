@@ -36,10 +36,10 @@ pipeline {
                     description: 'For multiple values separate them with commas, e.g.: 15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
     string(name: 'IN_INSTITUTIONS',
                         defaultValue: '',
-                        description: 'For multiple values separate them with commas, e.g.: 15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
+                        description: 'Only for collections. For multiple values separate them with commas, e.g.: 15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
     string(name: 'NOT_IN_INSTITUTIONS',
                            defaultValue: '',
-                           description: 'For multiple values separate them with commas, e.g.: 15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
+                           description: 'Only for collections. For multiple values separate them with commas, e.g.: 15c869b3-d157-4af4-a616-77e38fc2d49c,4b4a49d5-c18b-4eeb-9a28-c854cb50a11b')
   }
   stages {
     stage('Run') {

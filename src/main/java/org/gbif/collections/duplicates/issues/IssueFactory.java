@@ -153,7 +153,7 @@ public class IssueFactory {
         .append(" with parameters: ");
     body.append(duplicatesRequestToString(request));
 
-    body.append("Issues created: ");
+    body.append(issues.size() + " issues created: ");
     issues.forEach(
         issue ->
             body.append(NEW_LINE)

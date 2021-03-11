@@ -3,6 +3,7 @@ package org.gbif.collections.duplicates.issues;
 import org.gbif.collections.duplicates.Config;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -38,6 +39,9 @@ public class GithubClient {
     OkHttpClient okHttpClient =
         new OkHttpClient.Builder()
             .cache(null)
+            .connectTimeout(Duration.ofMinutes(2))
+            .readTimeout(Duration.ofMinutes(2))
+            .writeTimeout(Duration.ofMinutes(2))
             .addInterceptor(new BasicAuthInterceptor(user, password))
             .build();
 

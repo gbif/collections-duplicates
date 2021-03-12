@@ -1,4 +1,4 @@
-# Collections duplicates
+# Project: Collections registry (GRSciColl) duplicate removal
 
 Project that retrieves collections duplicates from the registry API and creates Github issues to handle each duplicate group separately.
 The first round of issue generated correspond to institutions that have the same name and are located in the same city: https://github.com/gbif/collections-duplicates/issues/192

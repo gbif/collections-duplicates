@@ -69,7 +69,7 @@ public class IssueFactory {
           duplicatesBody.append(TRIPLE_QUOTE_SEPARATOR).append(NEW_LINE);
 
           // add labels
-          if (duplicate.isActive()) {
+          if (!duplicate.isActive()) {
             labels.add(CONTAINS_INACTIVE_LABEL);
           }
           if (duplicate.isIh()) {

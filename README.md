@@ -1,6 +1,9 @@
 # Project: Collections registry (GRSciColl) duplicate removal
 
 Project that retrieves collections duplicates from the registry API and creates Github issues to handle each duplicate group separately.
+
+[GRSciColl](https://www.gbif.org/grscicoll) contains inherited data compiled from different sources and has historically grown. This generated a number of overlaps and duplicates. We now ask for help to the community to review and clean those duplicates.
+
 The first round of issue generated correspond to institutions that have the same name and are located in the same city: https://github.com/gbif/collections-duplicates/issues/192
 
 # How can you help?
@@ -14,9 +17,9 @@ When commenting, it would help us if you could:
 ## To keep in mind
 
 Here a a few points to keep in mind in order to help you review potential duplicates:
-1. **Is the entry "valid"**? The "valid" field in GRSciColl indicates whether a particular institution/collection and its code are deprecated or not. When merging an institution or collection with another one, its code will become and alternative code in the remaining entry and can still be used to be linked with specimens. So unless the institution explicitly ask the two entries to remain separate, it seems safe to merge an "invalid" entry with a valid one.
+1. **Is the entry "valid"**? The "valid" field in GRSciColl indicates whether a particular institution/collection and its code are deprecated or not. When merging an institution or collection with another one, its code will become an alternative code in the remaining entry and can still be used to be linked with specimens. So unless the institution explicitly ask the two entries to remain separate, it seems safe to merge an "invalid" entry with a valid one. Give priority to a valid code over an updated title (the title can always be updated in the remaining entry).
 2. **Which entry is linked with specimens?** As you might know, the occurrences on GBIF are linked to GRSciColl whenever possible. Keeping that in mind can help visualize which collection or institution codes and identifiers are used and chose the institution to keep.
-3. **Are the entries coming from Index Herbariorum synchronization?** The IH synchronization generates a lot of duplicates as several Herbaria can belong to the same institution.
+3. **Are the entries coming from Index Herbariorum synchronization?** The IH synchronization generates a lot of duplicates as several Herbaria can belong to the same institution. An institution can be disconnected from IH before being merged. Keep in mind that any institution remaning connected to IH will be updated by IH during weekly synchronization. As IH is often updated more frequently than GRSciColl, you might want to keep the entry connected to IH.
 4. **In doubt, check with the institution.** They will know how they want to be represented on GRSciColl.
 
 

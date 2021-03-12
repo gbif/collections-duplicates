@@ -11,7 +11,7 @@ When commenting, it would help us if you could:
 * Specify whether you are affiliated with the institution(s) concerned.
 * Include in your comment some references (links to the institution websites, documentation, etc.)
 
-## Guidelines
+## To keep in mind
 
 Here a a few points to keep in mind in order to help you review potential duplicates:
 1. **Is the entry "valid"**? The "valid" field in GRSciColl indicates whether a particular institution/collection and its code are deprecated or not. When merging an institution or collection with another one, its code will become and alternative code in the remaining entry and can still be used to be linked with specimens. So unless the institution explicitly ask the two entries to remain separate, it seems safe to merge an "invalid" entry with a valid one.

@@ -46,7 +46,7 @@
   <properties>
     <jdkLevel>1.8</jdkLevel>
 
-    <registry.version>3.61</registry.version>
+    <registry.version>3.63</registry.version>
     <retrofit.version>2.7.1</retrofit.version>
     <okhttp.version>4.3.1</okhttp.version>
     <okio.version>2.4.3</okio.version>

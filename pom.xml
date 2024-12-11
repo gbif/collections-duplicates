@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>collections-duplicates</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1-SNAPSHOT</version>
 
   <name>Collections duplicates</name>
   <url>https://github.com/gbif/${project.artifactId}</url>
@@ -18,7 +18,7 @@
     <connection>scm:git:git@github.com:gbif/${project.artifactId}.git</connection>
     <url>https://github.com/gbif/${project.artifactId}</url>
     <developerConnection>scm:git:git@github.com:gbif/${project.artifactId}.git</developerConnection>
-    <tag>collections-duplicates-2.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <repositories>

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>37</version>
+    <version>59</version>
   </parent>
 
   <artifactId>collections-duplicates</artifactId>
@@ -44,9 +44,9 @@
   </distributionManagement>
 
   <properties>
-    <jdkLevel>1.8</jdkLevel>
+    <jdkLevel>11</jdkLevel>
 
-    <registry.version>3.63</registry.version>
+    <registry.version>4.0.1</registry.version>
     <retrofit.version>2.7.1</retrofit.version>
     <okhttp.version>4.3.1</okhttp.version>
     <okio.version>2.4.3</okio.version>
@@ -60,6 +60,9 @@
     <guava.version>28.2-jre</guava.version>
 
     <junit.version>5.7.1</junit.version>
+
+    <delombok.output>src/main/lombok</delombok.output>
+    <lombok-maven-plugin.version>1.18.0.0</lombok-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -193,6 +196,32 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok-maven-plugin</artifactId>
+        <version>${lombok-maven-plugin.version}</version>
+        <configuration>
+          <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+          <outputDirectory>${delombok.output}</outputDirectory>
+          <addOutputDirectory>false</addOutputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>delombok</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <configuration>
+          <sourcepath>${delombok.output}</sourcepath>
+        </configuration>
       </plugin>
     </plugins>
   </build>
